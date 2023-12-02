@@ -73,5 +73,5 @@ def day2():
     return 0
 
 #day1()
-day2()
+#day2()
 
