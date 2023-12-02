@@ -36,6 +36,42 @@ def day1():
     data.close()
     return 0
 
+def day2():
+    data = open("day2.txt","r")
+    sum=0
+    for x in data:
+        idd=int(x[x.find(" ")+1:x.find(":")])
+        power=0
+        r,g,b=0,0,0
+        minr,ming,minb=1,1,1
+        start = x.find(":")
+        end=x.find(";")
+        if(end==-1):
+            end=len(x)
+        while(start<len(x)):
+            if x.find("red",start,end)!=-1:
+                q=x.find("red",start,end)
+                r=int(x[x.find(" ",q-4,q):q-1])
+            if x.find("green", start, end) != -1:
+                q = x.find("green", start, end)
+                g = int(x[x.find(" ", q - 4, q):q - 1])
+            if x.find("blue", start, end) != -1:
+                q = x.find("blue", start, end)
+                b = int(x[x.find(" ", q - 4, q):q - 1])
+            minr = max(r,minr)
+            ming = max(g, ming)
+            minb = max(b, minb)
+            start=end
+            end = x.find(";",start+1)
+            if (end == -1):
+                end = len(x)
+
+        power = minr * minb * ming
+        sum = sum + power
+
+    print(sum)
+    return 0
 
 #day1()
+day2()
 
