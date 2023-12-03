@@ -72,6 +72,103 @@ def day2():
     print(sum)
     return 0
 
+def issymbol(s):
+    if s=="." or s=="0" or s=="1" or s=="2" or s=="3" or s=="4" or s=="5" or s=="6" or s=="7" or s=="8" or s=="9":
+        return False
+    else:
+        return True
+
+def getnum(s,pos):
+    num=""
+    i=pos
+    j=pos+1
+    while i>-1 and s[i].isdigit():
+        num=s[i]+num
+        i=i-1
+    while j<len(s) and s[j].isdigit():
+        num=num+s[j]
+        j=j+1
+    return int(num)
+
+def day3part1():
+    N=140
+    S=["" for _ in range(0,N)]
+    data= open("day3.txt","r")
+    sum=0
+    k=0
+    for x in data:
+        S[k]=x
+        k=k+1
+    for i in range(0,N):
+        for j in range(0,N):
+            if issymbol(S[i][j]):
+                if(S[i-1][j].isdigit()):
+                    sum=sum+getnum(S[i-1],j)
+                else:
+                    if(S[i-1][j-1].isdigit()):
+                        sum=sum+getnum(S[i-1],j-1)
+                    if (S[i - 1][j + 1].isdigit()):
+                        sum = sum + getnum(S[i - 1], j + 1)
+
+                if (S[i + 1][j].isdigit()):
+                    sum = sum + getnum(S[i + 1], j)
+                else:
+                    if (S[i + 1][j - 1].isdigit()):
+                        sum = sum + getnum(S[i + 1], j - 1)
+                    if (S[i + 1][j + 1].isdigit()):
+                        sum = sum + getnum(S[i + 1], j + 1)
+
+                if (S[i][j-1].isdigit()):
+                    sum = sum + getnum(S[i], j-1)
+                if (S[i][j+1].isdigit()):
+                    sum = sum + getnum(S[i], j+1)
+    print(sum)
+    data.close()
+    return 0
+
+def day3part2():
+    N=140
+    S=["" for _ in range(0,N)]
+    data= open("day3.txt","r")
+    sum=0
+    k=0
+    for x in data:
+        S[k]=x
+        k=k+1
+    for i in range(0,N):
+        for j in range(0,N):
+            if S[i][j]=="*":
+                L=[]
+                if(S[i-1][j].isdigit()):
+                    L.append(getnum(S[i-1],j))
+                else:
+                    if(S[i-1][j-1].isdigit()):
+                        L.append(getnum(S[i-1],j-1))
+                    if (S[i - 1][j + 1].isdigit()):
+                        L.append(getnum(S[i-1],j+1))
+
+                if (S[i + 1][j].isdigit()):
+                    L.append(getnum(S[i+1],j))
+                else:
+                    if (S[i + 1][j - 1].isdigit()):
+                        L.append(getnum(S[i+1],j-1))
+                    if (S[i + 1][j + 1].isdigit()):
+                        L.append(getnum(S[i+1],j+1))
+
+                if (S[i][j-1].isdigit()):
+                    L.append(getnum(S[i],j-1))
+                if (S[i][j+1].isdigit()):
+                    L.append(getnum(S[i],j+1))
+                if len(L)==2:
+                    sum=sum+(L[0]*L[1])
+    print(sum)
+    data.close()
+    return 0
+
+
 #day1()
 #day2()
+#day3part1()
+#day3part2()
+
 
