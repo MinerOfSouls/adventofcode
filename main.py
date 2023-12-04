@@ -165,10 +165,61 @@ def day3part2():
     data.close()
     return 0
 
+def day4():
+    data = open("day4.txt","r")
+    L=[]
+    for x in data:
+        a= x.find(":")+1
+        b= x.find("|")
+        win=[]
+        our=[]
+        num=""
+        amaount=0
+        for i in range(a,b):
+            if x[i].isdigit():
+                num=num+x[i]
+            else:
+                if num!="":
+                    win.append(int(num))
+                num=""
+        a,b=b+1,len(x)
+        for j in range(a,b):
+            if x[j].isdigit():
+                num=num+x[j]
+            else:
+                if num!="":
+                    our.append(int(num))
+                num=""
+        for i in win:
+            for j in our:
+                if(i==j):
+                    amaount=amaount+1
+        L.append(amaount)
+    W=[1 for _ in range(0,len(L))]
+    n=len(L)
+    sum=0
+
+    for y in range(0,n):
+        p=y+1
+        while p<n and p<y+L[y]+1:
+            W[p]+=1*W[y]
+            p+=1
+    for o in W:
+        sum=sum+o
+
+    print(sum)
+
+
+    data.close()
+    return 0
+
+
+
 
 #day1()
 #day2()
 #day3part1()
 #day3part2()
+day4()
 
 
