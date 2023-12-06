@@ -349,9 +349,9 @@ def day5():
     temperaturehumiditymap.sorter()
     humiditylocationmap.sorter()
 
+
     for i in seeds:
         S=seedsoilmap.getranges(tuple((i[0],i[0]+i[1])))
-        print(S)
         for s in S:
             F=seedsoilmap.getranges(s)
             for f in F:
