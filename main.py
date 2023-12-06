@@ -213,6 +213,23 @@ def day4():
     data.close()
     return 0
 
+class customdik:
+    keys=[]
+    values=[]
+    def add(self,k,v):
+        self.keys.append(k)
+        self.values.append(v)
+    def checkrange(self,i):
+        N=len(self.keys)
+        for x in range(0,N):
+            if self.keys[x][0]<=i and i<=self.keys[x][1]:
+                print(x)
+                return self.values[x]+(i-self.keys[x][0])
+        return i
+    def pronter(self):
+        for i in range(0,len(self.values)):
+            print(self.keys[i], self.values[i])
+
 def day5():
     print("porces start")
     seeds=[2041142901,113138307,302673608,467797997,1787644422,208119536,143576771,99841043,4088720102,111819874,946418697,13450451,3459931852,262303791,2913410855,533641609,2178733435,26814354,1058342395,175406592]
@@ -267,47 +284,49 @@ def day5():
 
     print("file reading done")
 
-    seedsoilmap ={}
+    seedsoilmap = customdik()
     for x in seedsoil:
-        seedsoilmap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+        seedsoilmap.add((x[1],x[1]+x[2]),x[0])
     print("map 1 done")
-    soilfretilizermap = {}
+    soilfretilizermap = customdik()
     for x in soilfretilizer:
-        soilfretilizermap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+        soilfretilizermap.add((x[1],x[1]+x[2]),x[0])
     print("map 2 done")
-    fretilizerwatermap = {}
+    fretilizerwatermap = customdik()
     for x in fretilizerwater:
-        fretilizerwatermap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+        fretilizerwatermap.add((x[1],x[1]+x[2]),x[0])
     print("map 3 done")
-    waterlightmap = {}
+    waterlightmap = customdik()
     for x in waterlight:
-        waterlightmap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+        waterlightmap.add((x[1],x[1]+x[2]),x[0])
     print("map 4 done")
-    lighttemperaturemap = {}
+    lighttemperaturemap = customdik()
     for x in lighttemperature:
-        lighttemperaturemap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+        lighttemperaturemap.add((x[1],x[1]+x[2]),x[0])
     print("map 4 done")
-    temperaturehumiditymap = {}
+    temperaturehumiditymap = customdik()
     for x in temperaturehumidity:
-        temperaturehumiditymap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+        temperaturehumiditymap.add((x[1],x[1]+x[2]),x[0])
     print("map 5 done")
-    humiditylocationmap = {}
+    humiditylocationmap = customdik()
     for x in humiditylocation:
-        humiditylocationmap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+        humiditylocationmap.add((x[1],x[1]+x[2]),x[0])
     print("mapping done")
 
     minlocation=100000000000000000000000
     for i in seeds:
-        s=seedsoilmap.setdefault(i,(i,i))[0]+seedsoilmap.setdefault(i,(i,i))[1]-i
-        f=soilfretilizermap.setdefault(s,(s,s))[0]+soilfretilizermap.setdefault(s,(s,s))[1]-s
-        w=fretilizerwatermap.setdefault(f,(f,f))[0]+fretilizerwatermap.setdefault(f,(f,f))[1]-f
-        l=waterlightmap.setdefault(w,(w,w))[0]+waterlightmap.setdefault(w,(w,w))[1]-w
-        t=lighttemperaturemap.setdefault(l,(l,l))[0]+lighttemperaturemap.setdefault(l,(l,l))[1]-l
-        h=temperaturehumiditymap.setdefault(t,(t,t))[0]+temperaturehumiditymap.setdefault(t,(t,t))[1]-t
-        l=humiditylocationmap.setdefault(h,(h,h))[0]+humiditylocationmap.setdefault(h,(h,h))[1]-h
+        s=seedsoilmap.checkrange(i)
+        f=soilfretilizermap.checkrange(s)
+        w=fretilizerwatermap.checkrange(f)
+        l=waterlightmap.checkrange(w)
+        t=lighttemperaturemap.checkrange(l)
+        h=temperaturehumiditymap.checkrange(t)
+        l=humiditylocationmap.checkrange(h)
         minlocation=min(minlocation,l)
 
     print(minlocation)
+    lighttemperaturemap.pronter()
+    print(lighttemperaturemap.checkrange(0))
 
 
 
