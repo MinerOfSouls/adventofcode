@@ -213,6 +213,107 @@ def day4():
     data.close()
     return 0
 
+def day5():
+    print("porces start")
+    seeds=[2041142901,113138307,302673608,467797997,1787644422,208119536,143576771,99841043,4088720102,111819874,946418697,13450451,3459931852,262303791,2913410855,533641609,2178733435,26814354,1058342395,175406592]
+    map1=open("seedssoilmap.txt", "r")
+    seedsoil=[]
+    for x in map1:
+        T=[int(x[0:x.find(" ")]),int(x[x.find(" "):x.find(" ",x.find(" ")+1)]),int(x[x.find(" ",x.find(" ")+1):])]
+        seedsoil.append(T)
+    map1.close()
+    map2 = open("soilfertilizermap.txt", "r")
+    soilfretilizer = []
+    for x in map2:
+        T = [int(x[0:x.find(" ")]), int(x[x.find(" "):x.find(" ", x.find(" ") + 1)]),
+             int(x[x.find(" ", x.find(" ") + 1):])]
+        soilfretilizer.append(T)
+    map2.close()
+    map3 = open("fetilzerwatermap.txt", "r")
+    fretilizerwater = []
+    for x in map3:
+        T = [int(x[0:x.find(" ")]), int(x[x.find(" "):x.find(" ", x.find(" ") + 1)]),
+             int(x[x.find(" ", x.find(" ") + 1):])]
+        fretilizerwater.append(T)
+    map3.close()
+    map4 = open("waterlightmap.txt", "r")
+    waterlight = []
+    for x in map4:
+        T = [int(x[0:x.find(" ")]), int(x[x.find(" "):x.find(" ", x.find(" ") + 1)]),
+             int(x[x.find(" ", x.find(" ") + 1):])]
+        waterlight.append(T)
+    map4.close()
+    map5 = open("lighttemperaturemap.txt", "r")
+    lighttemperature = []
+    for x in map5:
+        T = [int(x[0:x.find(" ")]), int(x[x.find(" "):x.find(" ", x.find(" ") + 1)]),
+             int(x[x.find(" ", x.find(" ") + 1):])]
+        lighttemperature.append(T)
+    map5.close()
+    map6 = open("temperaturehumidity.txt", "r")
+    temperaturehumidity = []
+    for x in map6:
+        T = [int(x[0:x.find(" ")]), int(x[x.find(" "):x.find(" ", x.find(" ") + 1)]),
+             int(x[x.find(" ", x.find(" ") + 1):])]
+        temperaturehumidity.append(T)
+    map6.close()
+    map7 = open("humititylocationmap.txt", "r")
+    humiditylocation = []
+    for x in map7:
+        T = [int(x[0:x.find(" ")]), int(x[x.find(" "):x.find(" ", x.find(" ") + 1)]),
+             int(x[x.find(" ", x.find(" ") + 1):])]
+        humiditylocation.append(T)
+    map7.close()
+
+    print("file reading done")
+
+    seedsoilmap ={}
+    for x in seedsoil:
+        seedsoilmap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+    print("map 1 done")
+    soilfretilizermap = {}
+    for x in soilfretilizer:
+        soilfretilizermap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+    print("map 2 done")
+    fretilizerwatermap = {}
+    for x in fretilizerwater:
+        fretilizerwatermap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+    print("map 3 done")
+    waterlightmap = {}
+    for x in waterlight:
+        waterlightmap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+    print("map 4 done")
+    lighttemperaturemap = {}
+    for x in lighttemperature:
+        lighttemperaturemap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+    print("map 4 done")
+    temperaturehumiditymap = {}
+    for x in temperaturehumidity:
+        temperaturehumiditymap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+    print("map 5 done")
+    humiditylocationmap = {}
+    for x in humiditylocation:
+        humiditylocationmap[range(x[1],x[1]+x[2])]=(x[0],x[1])
+    print("mapping done")
+
+    minlocation=100000000000000000000000
+    for i in seeds:
+        s=seedsoilmap.setdefault(i,(i,i))[0]+seedsoilmap.setdefault(i,(i,i))[1]-i
+        f=soilfretilizermap.setdefault(s,(s,s))[0]+soilfretilizermap.setdefault(s,(s,s))[1]-s
+        w=fretilizerwatermap.setdefault(f,(f,f))[0]+fretilizerwatermap.setdefault(f,(f,f))[1]-f
+        l=waterlightmap.setdefault(w,(w,w))[0]+waterlightmap.setdefault(w,(w,w))[1]-w
+        t=lighttemperaturemap.setdefault(l,(l,l))[0]+lighttemperaturemap.setdefault(l,(l,l))[1]-l
+        h=temperaturehumiditymap.setdefault(t,(t,t))[0]+temperaturehumiditymap.setdefault(t,(t,t))[1]-t
+        l=humiditylocationmap.setdefault(h,(h,h))[0]+humiditylocationmap.setdefault(h,(h,h))[1]-h
+        minlocation=min(minlocation,l)
+
+    print(minlocation)
+
+
+
+
+
+
 
 
 
@@ -220,6 +321,7 @@ def day4():
 #day2()
 #day3part1()
 #day3part2()
-day4()
+#day4()
+day5()
 
 
