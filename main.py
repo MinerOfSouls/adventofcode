@@ -215,20 +215,47 @@ def day4():
 
 class customdik:
     def __init__(self):
-        self.keys=[]
-        self.values=[]
+        self.dick=[]
     def add(self,k,v):
-        self.keys.append(k)
-        self.values.append(v)
+        self.dick.append([k,tuple((v,v+k[1]-k[0]))])
+    def sorter(self):
+        self.dick.sort(key=lambda dic: dic[0][0])
+        print("A")
+        N=len(self.dick)
+        if self.dick[0][0][0]!=0:
+            self.dick.append([(0,self.dick[0][0][0]-1),(0,self.dick[0][0][0]-1)])
+        i=1
+        while i<N:
+            if self.dick[i][0][1]+1!=self.dick[i+1][0][0]:
+                self.dick.append([(self.dick[i][0][1]+1,self.dick[i+1][0][0]-1),(self.dick[i][0][1]+1,self.dick[i+1][0][0]-1)])
+                i=i+1
+        self.dick.sort(key=lambda dic: dic[0][0])
+
     def checkrange(self,i):
-        N=len(self.keys)
+        N=len(self.dick)
         for x in range(0,N):
-            if self.keys[x][0]<=i and i<=self.keys[x][1]:
-                return (self.values[x]+(i-self.keys[x][0]),x)
+            if self.dick[x][0][0]<=i and i<=self.dick[x][0][1]:
+                return (self.dick[x][1][0]+(i-self.dick[x][0][0]),x)
         return (i,x)
     def pronter(self):
-        for i in range(0,len(self.values)):
-            print(self.keys[i], self.values[i])
+        for i in range(0,len(self.dick)):
+            print(self.dick[i])
+    def getranges(self,t):
+        R=[]
+        a=self.checkrange(t[0])
+        b=self.checkrange(t[1])
+        if a[1]==b[1]:
+            return [(a[0],b[0])]
+        if a[1]+1==b[1]:
+            return [(a[0],self.dick[a[1]][1][1]),(self.dick[b[1]][1][0],b[0])]
+        i=a[1]+1
+        end=b[1]
+        R.append((a[0],self.dick[a[1]][1][1]))
+        while i<end:
+            R.append((self.dick[i][1][0],self.dick[i][1][1]))
+            i=i+1
+        R.append((self.dick[b[1]][1][0],b[0]))
+        return R
 
 def day5():
     print("porces start")
@@ -289,7 +316,6 @@ def day5():
     print("map 1 done")
     soilfretilizermap = customdik()
     for x in soilfretilizer:
-        print(tuple((x[1],x[1]+x[2])),x[0])
         soilfretilizermap.add(tuple((x[1],x[1]+x[2])),x[0])
     print("map 2 done")
     fretilizerwatermap = customdik()
@@ -314,10 +340,34 @@ def day5():
     print("mapping done")
 
     minlocation=100000000000000000000000
+
+    seedsoilmap.sorter()
+    soilfretilizermap.sorter()
+    fretilizerwatermap.sorter()
+    waterlightmap.sorter()
+    lighttemperaturemap.sorter()
+    temperaturehumiditymap.sorter()
+    humiditylocationmap.sorter()
+
     for i in seeds:
-        a=seedsoilmap.checkrange(i[0])
-        b=seedsoilmap.checkrange(i[1])
-        print(a,b)
+        S=seedsoilmap.getranges(tuple((i[0],i[0]+i[1])))
+        print(S)
+        for s in S:
+            F=seedsoilmap.getranges(s)
+            for f in F:
+                W=fretilizerwatermap.getranges(f)
+                for w in W:
+                    L=waterlightmap.getranges(w)
+                    for l in L:
+                        T=lighttemperaturemap.getranges(l)
+                        for t in T:
+                            H=temperaturehumiditymap.getranges(t)
+                            for h in H:
+                                L=humiditylocationmap.getranges(h)
+                                L=sorted(L,key=lambda location: location[0])
+                                minlocation=min(minlocation,L[0][0])
+    print(minlocation)
+
 
 
 
