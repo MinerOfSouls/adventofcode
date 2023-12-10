@@ -241,7 +241,7 @@ class customdik:
         for i in range(0,len(self.dick)):
             print(self.dick[i])
     def getranges(self,t):
-        R=[]
+        self.R=[]
         a=self.checkrange(t[0])
         b=self.checkrange(t[1])
         if a[1]==b[1]:
@@ -250,12 +250,12 @@ class customdik:
             return [(a[0],self.dick[a[1]][1][1]),(self.dick[b[1]][1][0],b[0])]
         i=a[1]+1
         end=b[1]
-        R.append((a[0],self.dick[a[1]][1][1]))
+        self.R.append((a[0],self.dick[a[1]][1][1]))
         while i<end:
-            R.append((self.dick[i][1][0],self.dick[i][1][1]))
+            self.R.append((self.dick[i][1][0],self.dick[i][1][1]))
             i=i+1
-        R.append((self.dick[b[1]][1][0],b[0]))
-        return R
+        self.R.append((self.dick[b[1]][1][0],b[0]))
+        return self.R
 
 def day5():
     print("porces start")
